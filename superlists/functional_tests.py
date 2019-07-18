@@ -8,7 +8,21 @@
 @文档说明:
 """
 from selenium import webdriver
+import unittest
 
-driver = webdriver.Chrome()
-driver.get('localhost:8000')
-assert 'Django' in driver.title
+class DjangoTest(unittest.TestCase):
+    def setUp(self):
+        '''准备工作：启动浏览器'''
+        self.driver=webdriver.Chrome()
+
+    def test_url_and_assert(self):
+        '''测试项：打开URL和断言测试'''
+        self.driver.get('http://localhost:8000')
+        self.assertIn('Django',self.driver.title)
+
+    def tearDown(self):
+        '''善后工作：关闭浏览器'''
+        self.driver.quit()
+
+if __name__ == '__main__':
+        unittest.main(verbosity=2)
